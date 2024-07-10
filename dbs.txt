@@ -1,0 +1,9 @@
+mongoimport --uri mongodb://localhost:27017/swapi --collection films --drop --file c:/swapi-data/films.json --jsonArray
+
+mongoimport --uri mongodb://localhost:27017/swapi --collection planets --drop --file c:/swapi-data/planets.json --jsonArray
+
+mongoimport --uri mongodb://localhost:27017/swapi --collection characters --drop --file c:/swapi-data/characters.json --jsonArray
+
+mongoimport --uri mongodb://localhost:27017/swapi --collection films_characters --drop --file c:/swapi-data/films_characters.json --jsonArray
+
+mongoimport --uri mongodb://localhost:27017/swapi --collection films_planets --drop --file c:/swapi-data/films_planets.json --jsonArray
