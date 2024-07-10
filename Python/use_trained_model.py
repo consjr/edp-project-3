@@ -39,7 +39,7 @@ extra_cols = set(df_large_encoded.columns) - set(df_train_encoded.columns)
 df_large_encoded.drop(columns=extra_cols, inplace=True)
 
 # Ensure the columns are in the same order as the training set
-df_large_encoded = df_large_encoded[df_train_encoded.columns.drop(unused_columns)]
+df_large_encoded = df_large_encoded[[col for col in df_train_encoded.columns if col not in unused_columns]]
 
 # Make predictions
 predictions = loaded_model.predict(df_large_encoded)
