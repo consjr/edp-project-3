@@ -25,15 +25,21 @@ df_large_encoded = pd.get_dummies(df_large, columns=['unit_type', 'homeworld'])
 df_train = pd.read_csv("troop_movements.csv")
 df_train_encoded = pd.get_dummies(df_train, columns=['unit_type', 'homeworld'])
 
-# Ensure the columns match between training and prediction datasets
+# Drop columns that were not used during training
+unused_columns = ['timestamp', 'unit_id', 'empire_or_resistance']
+df_large_encoded.drop(columns=unused_columns, inplace=True, errors='ignore')
+
+# Ensure all columns from the training set are present in the prediction set
 missing_cols = set(df_train_encoded.columns) - set(df_large_encoded.columns)
 for c in missing_cols:
     df_large_encoded[c] = 0
 
+# Remove any extra columns that were not in the training set
 extra_cols = set(df_large_encoded.columns) - set(df_train_encoded.columns)
 df_large_encoded.drop(columns=extra_cols, inplace=True)
 
-df_large_encoded = df_large_encoded[df_train_encoded.columns]
+# Ensure the columns are in the same order as the training set
+df_large_encoded = df_large_encoded[df_train_encoded.columns.drop(unused_columns)]
 
 # Make predictions
 predictions = loaded_model.predict(df_large_encoded)
